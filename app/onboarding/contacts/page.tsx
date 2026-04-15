@@ -25,6 +25,21 @@ export default function ContactsPage() {
   const [manualPhone, setManualPhone] = useState('')
 
   useEffect(() => {
+    // Check if user uploaded an iCloud contacts file on the previous screen
+    const icloudRaw = sessionStorage.getItem('icloudContacts')
+    if (icloudRaw) {
+      try {
+        const icloudContacts = JSON.parse(icloudRaw)
+        if (icloudContacts.length > 0) {
+          setAllContacts(icloudContacts)
+          setFiltered(icloudContacts)
+          setLoading(false)
+          return
+        }
+      } catch { /* fall through to Google */ }
+    }
+
+    // Fall back to Google Contacts
     fetch('/api/contacts/google')
       .then((r) => r.json())
       .then((data) => {
@@ -32,7 +47,7 @@ export default function ContactsPage() {
           setAllContacts(data.contacts)
           setFiltered(data.contacts)
         } else {
-          setLoadError('Could not load Google Contacts. You can still add people manually below.')
+          setLoadError('Could not load contacts. You can still add people manually below.')
         }
       })
       .catch(() => setLoadError('Could not load Google Contacts. You can still add people manually below.'))
