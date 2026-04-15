@@ -28,7 +28,7 @@ export default function OnboardingBrief() {
       </div>
 
       <Link
-        href="/onboarding/contacts"
+        href="/onboarding/sync"
         className="block w-full bg-[#2D6A4F] text-white font-semibold py-4 rounded-2xl text-center active:scale-[0.98] transition-all mt-6"
       >
         Choose from my contacts →
@@ -40,7 +40,7 @@ export default function OnboardingBrief() {
 function ProgressBar({ step }: { step: number }) {
   return (
     <div className="flex gap-1.5">
-      {[1, 2, 3, 4].map((s) => (
+      {[1, 2, 3, 4, 5].map((s) => (
         <div key={s} className={`h-1 flex-1 rounded-full ${s <= step ? 'bg-[#2D6A4F]' : 'bg-gray-200'}`} />
       ))}
     </div>
