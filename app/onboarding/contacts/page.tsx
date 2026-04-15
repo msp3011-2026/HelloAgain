@@ -81,7 +81,7 @@ export default function ContactsPage() {
 
       {/* Sticky header */}
       <div className="px-6 pt-8 pb-3 sticky top-0 bg-[#FAFAF7] z-10 space-y-4">
-        <ProgressBar step={3} />
+        <ProgressBar step={4} />
 
         <div>
           <h1 className="text-xl font-bold text-gray-900">Who do you want to reconnect with?</h1>
@@ -223,7 +223,7 @@ export default function ContactsPage() {
 function ProgressBar({ step }: { step: number }) {
   return (
     <div className="flex gap-1.5">
-      {[1, 2, 3, 4].map((s) => (
+      {[1, 2, 3, 4, 5].map((s) => (
         <div key={s} className={`h-1 flex-1 rounded-full ${s <= step ? 'bg-[#2D6A4F]' : 'bg-gray-200'}`} />
       ))}
     </div>
