@@ -2,9 +2,9 @@ import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 
 const TIER_STYLE: Record<string, { label: string; emoji: string; color: string }> = {
-  warm:      { label: 'Warm',      emoji: '🔥', color: 'bg-orange-100 text-orange-700' },
-  friendly:  { label: 'Friendly',  emoji: '🤝', color: 'bg-blue-100 text-blue-700' },
-  keep_warm: { label: 'Keep warm', emoji: '☀️', color: 'bg-yellow-100 text-yellow-700' },
+  warm:      { label: 'Monthly',      emoji: '🌱', color: 'bg-emerald-100 text-emerald-700' },
+  friendly:  { label: 'Quarterly',    emoji: '☀️', color: 'bg-amber-100 text-amber-700' },
+  keep_warm: { label: 'Twice a year', emoji: '🌙', color: 'bg-purple-100 text-purple-700' },
 }
 
 export default async function HomePage() {

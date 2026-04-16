@@ -8,9 +8,9 @@ interface Contact { id: string; name: string; phone: string }
 type Tier = 'warm' | 'friendly' | 'keep_warm'
 
 const TIERS = [
-  { value: 'warm' as Tier,       emoji: '🔥', label: 'Warm',      desc: 'Every 2 wks',  days: 14,  active: 'bg-orange-400 border-orange-400 text-white',  idle: 'border-gray-100 text-gray-500 bg-gray-50' },
-  { value: 'friendly' as Tier,   emoji: '🤝', label: 'Friendly',  desc: 'Monthly',      days: 30,  active: 'bg-blue-400 border-blue-400 text-white',     idle: 'border-gray-100 text-gray-500 bg-gray-50' },
-  { value: 'keep_warm' as Tier,  emoji: '☀️', label: 'Keep warm', desc: 'Every 2 mo',   days: 60,  active: 'bg-yellow-400 border-yellow-400 text-white', idle: 'border-gray-100 text-gray-500 bg-gray-50' },
+  { value: 'warm' as Tier,       emoji: '🌱', label: 'Monthly',      desc: 'Once a month',      days: 30,  active: 'bg-emerald-500 border-emerald-500 text-white',  idle: 'border-gray-100 text-gray-500 bg-gray-50' },
+  { value: 'friendly' as Tier,   emoji: '☀️', label: 'Quarterly',    desc: 'Every 3 months',    days: 90,  active: 'bg-amber-400 border-amber-400 text-white',      idle: 'border-gray-100 text-gray-500 bg-gray-50' },
+  { value: 'keep_warm' as Tier,  emoji: '🌙', label: 'Twice a year', desc: 'Every 6 months',    days: 180, active: 'bg-purple-400 border-purple-400 text-white',    idle: 'border-gray-100 text-gray-500 bg-gray-50' },
 ]
 
 export default function TiersPage() {
@@ -39,11 +39,13 @@ export default function TiersPage() {
     if (!user) { router.push('/'); return }
 
     const today = new Date()
-    const rows = contacts.map((c) => {
+    // Phase nudge dates starting from today, 2 days apart (max 14 days out)
+    // This ensures beta users get nudges right away rather than waiting months
+    const rows = contacts.map((c, index) => {
       const tier = tiers[c.id] || 'friendly'
-      const days = TIERS.find((t) => t.value === tier)?.days ?? 30
+      const daysOffset = Math.min(index * 2, 14) // 0, 2, 4, 6... capped at 14 days
       const next = new Date(today)
-      next.setDate(today.getDate() + days)
+      next.setDate(today.getDate() + daysOffset)
       return { user_id: user.id, name: c.name, phone: c.phone, tier, next_nudge_date: next.toISOString().split('T')[0] }
     })
 
